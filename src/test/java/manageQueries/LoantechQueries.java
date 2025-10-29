@@ -21,5 +21,28 @@ public class LoantechQueries {
         return query;
     }
 
+    public static String istenenTablodakiTumKayitlariSorgulama(String tabloAdi){
+        // SELECT * FROM users
+        String query = "SELECT * FROM " + tabloAdi;
+
+        return query;
+    }
+
+    public static String istenenTablodaIstenenDegereSahipKaydiUpdateEtme(String tabloAdi, String istenenSutun, String istenenDeger, String updateSutunu, String updateDegeri){
+        // When "users" tablosunda "id" degeri "34" olan kaydin "email" bilgisini "update@deneme.com" olarak update eder
+        // UPDATE users SET email = 'update@deneme.com' WHERE id = '34';
+
+        String query = "UPDATE " + tabloAdi + " SET "+ updateSutunu + " = '"+ updateDegeri + "' WHERE " + istenenSutun + " = '"+ istenenDeger +"'";
+        return query;
+    }
+
+    public static String istenenDegereSahipkaydiSilme(String tabloAdi, String istenenSutun, String istenenDeger){
+
+        // "users" tablosunda "id" degeri "34" olan kaydi siler
+        // DELETE FROM users WHERE id = '34';
+        String query = "DELETE FROM "+ tabloAdi+" WHERE "+ istenenSutun+ " = '"+ istenenDeger+"'";
+        return query;
+    }
+
 
 }
