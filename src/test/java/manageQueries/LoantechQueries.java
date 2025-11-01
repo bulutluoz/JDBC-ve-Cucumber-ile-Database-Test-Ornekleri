@@ -2,6 +2,18 @@ package manageQueries;
 
 public class LoantechQueries {
 
+    public static String userstablosuna4DegerGirerekKayitEklemeSorgusu = "INSERT INTO users (id,email,username,password) VALUES(?,?,?,?)";
+
+    public static String usersTablosundaPsIdIleUsernameSorgusu = "SELECT username FROM users WHERE id = ?";
+
+    public static String usersTablosundakiTumKayitlariSorgulama = "SELECT * FROM users";
+
+    public static String usersTablosundaPsIdIleEmailUpdateSorgusu = "UPDATE users SET email = ? WHERE id = ?";
+
+    public static String usersTablosundaPsIdIleEmailSorgulama = "SELECT email FROM users WHERE id = ?";
+
+    public static String usersTablosundaPsIdIleKayitSilmeSorgusu = "DELETE FROM users WHERE id = ?";
+
 
     public static String dortSutunBilgisiyleKayitOlusturmaSorgusu(String tabloAdi, String sutun1, String sutun2, String sutun3, String sutun4, String deger1, String deger2, String deger3, String deger4){
         // INSERT INTO users(id,email,username,password) VALUES ('34','testNG@deneme.com','alican','alican34')
@@ -10,7 +22,6 @@ public class LoantechQueries {
 
         return query;
     }
-
 
     public static String istenenTablodanIdIleSutunSorgulama(String tabloAdi, String sorguDegeri, String istenenSutun){
         // "users" tablosunda "id" degeri "34" olan kaydin "username" inin "alican" oldugunu test eder

@@ -21,14 +21,21 @@
 
 SELECT email FROM users WHERE id='34'
 
-SELECT * FROM users]]></console>
+SELECT * FROM users
+
+SELECT username FROM users WHERE id = 13
+
+INSERT INTO users (id, email, username, password) VALUES ('34', 'testNG@deneme.com', 'alican', 'alican34')]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="dbf08745-f3d9-4f2f-85ce-c18bbf92cc92" object-ref="consoles/Connection" />
+      <object connection-id="dbf08745-f3d9-4f2f-85ce-c18bbf92cc92" object-ref="schemas/u201212290_qaloantec/tables/users" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dbf08745-f3d9-4f2f-85ce-c18bbf92cc92" />

@@ -114,8 +114,137 @@ public class LoantechStepdefinitions {
         Assert.assertEquals(actualKayitSayisi, 0);
     }
 
+    @When("ps users tablosunda id,email,username ve password sutunlarina {string}, {string}, {string} ve {string} degerleri ile bir kayit olusturur")
+    public void ps_users_tablosunda_id_email_username_ve_password_sutunlarina_ve_degerleri_ile_bir_kayit_olusturur(String idDegeri, String emailDegeri, String usernameDegeri, String passwordDegeri) throws SQLException {
+        // INSERT INTO users (id,email,username,password) VALUES(idDegeri,emailDegeri,usernameDegeri,passwordDegeri)
+        String query = LoantechQueries.userstablosuna4DegerGirerekKayitEklemeSorgusu; // ? var
+        // INSERT INTO users (id,email,username,password) VALUES(?,?,?,?)
+
+        ReusableMethods.createPreparedStatement(query); // ? var
+        ReusableMethods.preparedStatement.setString(1,idDegeri);
+        ReusableMethods.preparedStatement.setString(2,emailDegeri);
+        ReusableMethods.preparedStatement.setString(3,usernameDegeri);
+        ReusableMethods.preparedStatement.setString(4,passwordDegeri);
+        // INSERT INTO users (id,email,username,password) VALUES('34','testNG@deneme.com','alican','alican34')
+
+        ReusableMethods.preparedStatement.executeUpdate();
+
+    }
+
+    @Then("ps users tablosunda id degeri {string} olan kaydin username inin {string} oldugunu test eder")
+    public void ps_users_tablosunda_id_degeri_olan_kaydin_username_inin_oldugunu_test_eder(String idDegeri, String expectedusername) throws SQLException {
+        // SELECT username FROM users WHERE id = 34;
+        String query = LoantechQueries.usersTablosundaPsIdIleUsernameSorgusu;
+        // SELECT username FROM users WHERE id = ?
+
+        ReusableMethods.createPreparedStatement(query); // ? var
+        ReusableMethods.preparedStatement.setString(1,idDegeri);
+        // SELECT username FROM users WHERE id = 34
+
+        ReusableMethods.resultSet = ReusableMethods.preparedStatement.executeQuery();
+
+        // ReusableMethods.resultSet.first(); // prepared statement'da first() calismaz
+        ReusableMethods.resultSet.next();
+
+        // resultset ilk satira gelmis oldu
+        // simdi o satirdaki username bilgisini alip actual deger olarak kaydedelim
+        String actualusername = ReusableMethods.resultSet.getString("username");
+
+        Assert.assertEquals(actualusername,expectedusername);
 
 
+    }
+
+    @Then("ps database baglantisini kapatir")
+    public void ps_database_baglantisini_kapatir() {
+        ReusableMethods.closeMyPsConnection();
+
+    }
+
+    @When("ps users tablosundaki kayitlari sorgular")
+    public void ps_users_tablosundaki_kayitlari_sorgular() throws SQLException {
+        // SELECT * FROM users
+        String query = LoantechQueries.usersTablosundakiTumKayitlariSorgulama;
+
+        ReusableMethods.createPreparedStatement(query);
+
+        ReusableMethods.resultSet = ReusableMethods.preparedStatement.executeQuery();
+
+    }
+
+
+    @Then("resultSet uzerinde id degeri {string} ve email degeri {string} olan {int} kayit oldugunu test eder")
+    public void resultsetUzerindeIdDegeriVeEmailDegeriOlanKayitOldugunuTestEder(String idDegeri, String emailDegeri, int expectedKayitSayisi) throws SQLException {
+
+        int actualKayitsayisi = 0 ;
+
+        while( ReusableMethods.resultSet.next()){
+
+            String satirdakiIdDegeri = ReusableMethods.resultSet.getString("id");
+            String satirdakiEmailDegeri = ReusableMethods.resultSet.getString("email");
+
+            if (satirdakiIdDegeri.equals(idDegeri) && satirdakiEmailDegeri.equals(emailDegeri)){
+                actualKayitsayisi++;
+            }
+
+        }
+
+        Assert.assertEquals(actualKayitsayisi,expectedKayitSayisi);
+
+    }
+
+    @When("ps users tablosunda id degeri {string} olan kaydin email bilgisini {string} olarak update eder")
+    public void ps_users_tablosunda_id_degeri_olan_kaydin_email_bilgisini_olarak_update_eder(String idDegeri, String emailDegeri) throws SQLException {
+        // UPDATE users SET email = emailDegeri WHERE id = idDegeri ;
+
+        String query = LoantechQueries.usersTablosundaPsIdIleEmailUpdateSorgusu;
+        // UPDATE users SET email = ? WHERE id = ?
+
+        ReusableMethods.createPreparedStatement(query);
+
+        ReusableMethods.preparedStatement.setString(1,emailDegeri);
+        ReusableMethods.preparedStatement.setString(2,idDegeri);
+
+
+        ReusableMethods.preparedStatement.executeUpdate();
+
+    }
+
+    @Then("ps users tablosunda id degeri {string} olan kaydin email inin {string} oldugunu test eder")
+    public void ps_users_tablosunda_id_degeri_olan_kaydin_email_inin_oldugunu_test_eder(String idDegeri, String expectedEmailDegeri) throws SQLException {
+
+        // SELECT email FROM users WHERE id = 34
+        String query = LoantechQueries.usersTablosundaPsIdIleEmailSorgulama;
+        // SELECT email FROM users WHERE id = ?
+
+        ReusableMethods.createPreparedStatement(query);
+
+        ReusableMethods.preparedStatement.setString(1,idDegeri);
+        // SELECT email FROM users WHERE id = 34
+
+        ReusableMethods.resultSet = ReusableMethods.preparedStatement.executeQuery();
+
+        ReusableMethods.resultSet.next();
+        String actualEmaildegeri = ReusableMethods.resultSet.getString("email");
+
+        Assert.assertEquals(actualEmaildegeri,expectedEmailDegeri);
+    }
+
+
+    @When("ps users tablosunda id degeri {string} olan kaydi siler")
+    public void psUsersTablosundaIdDegeriOlanKaydiSiler(String idDegeri) throws SQLException {
+
+        // DELETE FROM users WHERE id = ?
+
+        String query = LoantechQueries.usersTablosundaPsIdIleKayitSilmeSorgusu; // ? var
+
+        ReusableMethods.createPreparedStatement(query);
+
+        ReusableMethods.preparedStatement.setString(1,idDegeri);
+
+        ReusableMethods.preparedStatement.executeUpdate();
+
+    }
 }
 
 

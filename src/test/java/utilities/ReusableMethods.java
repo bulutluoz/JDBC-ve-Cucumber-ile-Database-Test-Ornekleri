@@ -50,6 +50,17 @@ public class ReusableMethods {
         }
     }
 
+    public static void closeMyPsConnection(){
+
+        try {
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static int executeUpdateStatement(String calisacakQuery){
         createStatement();
 

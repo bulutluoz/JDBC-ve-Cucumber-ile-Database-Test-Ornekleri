@@ -33,7 +33,7 @@
     And database baglantisini kapatir
 
 
-    @wip
+
     Scenario: TC04 Kayit silme testi
       # Loantech uygulamasındaki users tablosunda id değeri 34 olan kaydi silin
       # ve silme işleminin gerçekleştiğini doğrulayın.
